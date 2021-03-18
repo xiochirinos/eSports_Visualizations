@@ -1,0 +1,64 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+Twitch_Global <- read.csv("Twitch_global_data.csv")
+Twitch_Game <- read.csv("Twitch_game_data.csv")
+```
+
+```{r}
+summary(Twitch_Game)
+
+Twitch_Game_Clean <- Twitch_Game %>%
+  filter(Year == 2020, Rank < 10) %>%
+  group_by(Month)
+Twitch_Game_Clean
+```
+
+```{r}
+TwitchGames_HoursWatched <- ggplot(data = Twitch_Game_Clean, mapping = aes(x = Game, y = Month, fill = Hours_watched))+
+  geom_col(position = "dodge")+
+  theme(axis.text.x = element_text(face = "bold", size = 7, angle = 90)) +
+  theme(axis.text.y = element_text(face = "bold", size = 8)) +
+  labs(x ="Game",
+       y = "Month",
+       title = "Hours Watched vs Top 10 Games per Month",
+       subtitle = "Year: 2020",
+       fill = "Hours Watched", 
+       caption = "Source: Kaggle.com")
+TwitchGames_HoursWatched
+
+#ggsave(file = "TwitchGames_HoursWatched.png", plot = TwitchGames_HoursWatched)
+```
+
+
+```{r}
+TwitchGames_HoursStreamed <- ggplot(data = Twitch_Game_Clean, mapping = aes(x = Game, y = Hours_Streamed, color = Month))+
+  geom_point() +
+  theme(axis.text.x = element_text(face = "bold", size = 5, angle = 90)) +
+  theme(axis.text.y = element_text(face = "bold", size = 7)) +
+  facet_wrap(~ Month) +
+  labs(x ="Game",
+       y = "Hours Streamed",
+       title = "Hours Streamed vs Top 10 Games per Month",
+       subtitle = "Year: 2020",
+       caption = "Source: Kaggle.com")
+TwitchGames_HoursStreamed
+
+#ggsave(file = "TwitchGames_HoursStreamed.png", plot = TwitchGames_HoursStreamed)
+```
+
+
+
+
+
+
+
+
