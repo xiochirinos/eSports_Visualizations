@@ -1,2 +1,2 @@
 # eSports_Visualizations
-Visualizations of the eSport world
+For this project I had to find a data set on eSports and generate 2 visualizations using GGPlot. 
